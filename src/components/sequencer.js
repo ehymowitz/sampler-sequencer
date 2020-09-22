@@ -29,22 +29,22 @@ const Sequencer = () => {
     }
   }
 
+  const keyPressHandler = (e) => {
+    if (e.key === " ") {
+      e.preventDefault()
+      playPause()
+    }
+    if (e.key === "s") {
+      stop()
+    }
+  }
+
   useEffect(() => {
     // Event Listener for keypresses (start/ stop with space)
-    const keyPressHandler = (e) => {
-      if (e.key === " ") {
-        e.preventDefault()
-        playPause()
-      }
-      if (e.key === "s") {
-        stop()
-      }
-    }
-
     document.addEventListener('keydown', keyPressHandler);
 
     // Update Spot
-    setTimeout(function(){
+    setTimeout(function(){ // This gets called multiple times somehow, maybe remove the timeout
       updateBeat()
     }, freq) ;
 
