@@ -10,7 +10,7 @@ const Sequencer = () => {
   const [playing, setPlay] = useState(false)
   const [beat, changeBeat] = useState(-1)
 
-  let freq = 60000/(tempo * 4)
+  const freq = (tempo >= 1) ? 60000/(tempo * 4) : 1666
 
   // Play controls
   const stop = () => {
@@ -39,12 +39,12 @@ const Sequencer = () => {
     }
   }
 
-  useEffect(() => {
+  useEffect(() => { // This gets called multiple times somehow
     // Event Listener for keypresses (start/ stop with space)
     document.addEventListener('keydown', keyPressHandler);
 
     // Update Spot
-    setTimeout(function(){ // This gets called multiple times somehow, maybe remove the timeout
+    setTimeout(function(){
       updateBeat()
     }, freq) ;
 
