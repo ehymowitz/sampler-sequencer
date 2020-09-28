@@ -4,6 +4,7 @@ import Select from 'react-select'
 import { notes, octaves, synths, citizenDjSounds, firestore } from '../data/synth-data'
 import Switch from '@material-ui/core/Switch';
 import axios from 'axios'
+import * as Tone from 'tone'
 
 const MpcButtonPair = ({left, right}) => {
 
@@ -47,6 +48,7 @@ const MpcButtonPair = ({left, right}) => {
   let t0
 
   const handleDown = (synth, note, octave, dj, switchOn) => {
+    Tone.start()
     t0 = performance.now()
     setMenu1(false)
     setMenu2(false)
