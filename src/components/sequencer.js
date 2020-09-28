@@ -39,18 +39,19 @@ const Sequencer = () => {
     }
   }
 
-  useEffect(() => { // This gets called multiple times somehow
+  useEffect(() => {
     // Event Listener for keypresses (start/ stop with space)
     document.addEventListener('keydown', keyPressHandler);
 
     // Update Spot
-    setTimeout(function(){
+    const beatUpdate = setTimeout(function(){
       updateBeat()
-    }, freq) ;
+    }, freq)
 
     return () => {
       // cleanup event listener
       document.removeEventListener('keydown', keyPressHandler);
+      clearTimeout(beatUpdate)
     };
   });
 
