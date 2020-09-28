@@ -1,20 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Dropzone from 'react-dropzone'
 
 const Mic = () => {
 
-  const handleFiles = (files) => { // working here
+  const [files, setFiles] = useState(
+    new Set(
+      Object.keys(localStorage).map(key => key) // change to filter for keys starting with sample.
+    )
+  )
+
+  const handleFiles = (files) => {
     const reader = new FileReader()
     files.forEach(item => {
       if (item.type === "audio/mpeg") {
-        console.log(item)
         reader.readAsDataURL(item)
+        reader.addEventListener("loadend", () => {
+          localStorage.setItem(`sample.${item.name}`, reader.result.toString())
+          setFiles(Object.keys(localStorage).map(key => key)) // change to filter for keys starting with sample.
+        })
       }
-      reader.addEventListener("loadend", (item.name) => {
-        sessionStorage.setItem(item.name, reader.result.toString())
-      })
     })
-    console.log(sessionStorage)
   }
 
   return (
@@ -27,6 +32,15 @@ const Mic = () => {
           </div>
         )}
       </Dropzone>
+      <ul>
+        {[...files].map((item, key) => {
+          return(
+            <li key={key}>
+              {item}
+            </li>
+          )
+        })}
+      </ul>
     </div>
   )
 }
