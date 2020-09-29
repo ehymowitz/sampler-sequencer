@@ -7,12 +7,18 @@ import { notes, octaves, synths } from '../data/synth-data'
 
 const SequencerRow = ({ beat }) => {
 
-  const options = Object.keys(localStorage).reverse().map(item => {
-    return({
-      value: item,
-      label: item.split('/')[item.split('/').length-1]
+  const options = Object.keys(localStorage).reverse()
+    .filter(key => {
+      return(
+        key.startsWith("hosted.") || key.startsWith("loaded.")
+      )
     })
-  })
+    .map(key => {
+      return({
+        value: key,
+        label: key.split(/[/]/)[key.split(/[/]/).length-1].split("loaded.")
+      })
+    })
 
   // Select States
   const [note, setNote] = useState(notes[0])
