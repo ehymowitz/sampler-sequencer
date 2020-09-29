@@ -24,7 +24,7 @@ const SequencerRow = ({ beat }) => {
   const [note, setNote] = useState(notes[0])
   const [octave, setOctave] = useState(octaves[0])
   const [synth, setSynth] = useState(synths[0])
-  const [drumSound, setDrumSound] = useState(options[1])
+  const [drumSound, setDrumSound] = useState(options[0])
 
   // Switch State
   const [switchState, changeSwitch] = useState(false)
