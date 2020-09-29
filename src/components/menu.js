@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FiMic } from 'react-icons/fi';
 import { BsFillPlayFill } from 'react-icons/bs';
 import { BiGridVertical } from 'react-icons/bi';
@@ -10,7 +10,15 @@ import HoverTip from './tool-tip'
 
 const Menu = () => {
 
-  const [content, changeContent] = useState(1)
+  useEffect(() => {
+    sessionStorage.setItem("page", 1)
+  },[])
+
+  const [content, changeContent] = useState(parseInt(sessionStorage.getItem("page")))
+
+  useEffect(() => {
+    sessionStorage.setItem("page", content)
+  },[content])
 
   return (
     <React.Fragment>
