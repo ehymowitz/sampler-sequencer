@@ -69,8 +69,6 @@ const Mic = () => {
 
   // Load Hosted Sounds
   const handleAddHosted = (item, string) => {
-    console.log(item.value)
-    console.log(item.label)
     const dataRef = firestore.ref(`${string}${item.value}`)
     dataRef.getDownloadURL().then(function(url) {
       axios({
