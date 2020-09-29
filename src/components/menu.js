@@ -11,7 +11,7 @@ import HoverTip from './tool-tip'
 const Menu = () => {
 
   useEffect(() => {
-    sessionStorage.setItem("page", 1)
+    sessionStorage.setItem("page", 2)
   },[])
 
   const [content, changeContent] = useState(parseInt(sessionStorage.getItem("page")))
@@ -26,21 +26,19 @@ const Menu = () => {
 
       <HashRouter>
         <div className = 'container'>
-          <Route exact path ="/" component={ Sequencer }/>
-          {
-            <Route path ="/mic" component={ Mic } />
-          }
+          <Route path ="/sequencer" component={ Sequencer }/>
+          <Route exact path ="/" component={ Mic } />
           <Route path ="/mpc" component={ Mpc } />
         </div>
 
         <div className="menu">
           <ul>
             <li style = {{ fontSize: "30px" }} >
-              <NavLink to = "/" style={ content === 1 ? {color: "white" }: {}} onClick={()=>changeContent(1)}> <BsFillPlayFill/> </NavLink>
+              <NavLink to = "/sequencer" style={ content === 1 ? {color: "white" }: {}} onClick={()=>changeContent(1)}> <BsFillPlayFill/> </NavLink>
             </li>
             <div className="vertical-divider"></div>
             <li style = {{ fontSize: "20px" }} onClick={()=>changeContent(2)}>
-              <NavLink to = "/mic" style={ content === 2 ? {color: "white" }: {}}> <FiMic/> </NavLink>
+              <NavLink to = "/" style={ content === 2 ? {color: "white" }: {}}> <FiMic/> </NavLink>
             </li>
             <div className="vertical-divider"></div>
             <li style = {{ fontSize: "30px" }} >

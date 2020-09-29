@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Select from 'react-select'
 import { citizenDjSounds, drumSounds, firestore} from '../data/synth-data'
 import axios from 'axios'
@@ -7,6 +7,29 @@ import Dropzone from 'react-dropzone'
 
 const Mic = () => {
 
+  // Initialize some sounds
+  useEffect(() => {
+    handleAddHosted({
+      value: "Akai_MPC-X__36kick_kg.mp3",
+      label: "Akai 36kick kg"}, "DrumSounds/")
+    handleAddHosted({
+      value: "Akai_MPC-X__60_snare_sa.mp3",
+      label: "Akai 60 snare sa"}, "DrumSounds/")
+    handleAddHosted({
+      value: "Roland_CR79__46hat_open_modified_h.mp3",
+      label: "Roland 46hat open modified h"}, "DrumSounds/")
+    handleAddHosted({
+      value: "Conversation-with-10-year-old-black-female-Washington-DC_afccal000391_006_00-04-20.wav",
+      label:"Conversation with 10 year old black female Washington DC 006"}, "CitizenDJ/Dialect Samples/")
+    handleAddHosted({
+      value: "Conversation-with-12-year-old-white-female-Detroit-Michigan_afccal000127_028_00-21-05.wav",
+      label: "Conversation with 12 year old white female Detroit Michigan 028"}, "CitizenDJ/Dialect Samples/")
+    handleAddHosted({
+      value: "Oral-history-with-89-year-old-male-Whick-Kentucky_afccal000357_013_00-07-16.wav",
+      label: "Oral history with 89 year old male Whick Kentucky 013"}, "CitizenDJ/Dialect Samples/")
+  },[])
+
+  // Initialize State
   const [userFiles, setUserFiles] = useState(
     new Set(Object.keys(localStorage).filter(key => key.startsWith("loaded.")))
   )
@@ -15,6 +38,7 @@ const Mic = () => {
     new Set(Object.keys(localStorage).filter(key => key.startsWith("hosted.")))
   )
 
+  // User File Uploads
   const handleUserFiles = (items) => {
     items.forEach(item => {
       if (item.type === "audio/mpeg") {
@@ -30,18 +54,23 @@ const Mic = () => {
     })
   }
 
+  // Play Sounds
   const handleMenuPlay = (file) => {
     const sound = localStorage.getItem(file)
     const audio = new Audio(sound)
     audio.play()
   }
 
+  // Delete Sounds
   const deleteItem = (file, filter, state) => {
     localStorage.removeItem(file)
     state(Object.keys(localStorage).filter(key => key.startsWith(filter)))
   }
 
+  // Load Hosted Sounds
   const handleAddHosted = (item, string) => {
+    console.log(item.value)
+    console.log(item.label)
     const dataRef = firestore.ref(`${string}${item.value}`)
     dataRef.getDownloadURL().then(function(url) {
       axios({
