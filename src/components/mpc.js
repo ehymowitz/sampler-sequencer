@@ -26,8 +26,8 @@ const MpcButtonPair = ({left, right}) => {
   const [menuOpened2, setMenu2] = useState(false)
 
   // Switch States
-  const [switchState1, changeSwitch1] = useState(true)
-  const [switchState2, changeSwitch2] = useState(true)
+  const [switchState1, changeSwitch1] = useState(false)
+  const [switchState2, changeSwitch2] = useState(false)
 
   // Switch Styling
   const selectStyle1 = {

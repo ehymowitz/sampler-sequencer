@@ -15,7 +15,7 @@ const SequencerRow = ({ beat }) => {
   const [drumSound, setDrumSound] = useState(drumSounds[0])
 
   // Switch State
-  const [switchState, changeSwitch] = useState(true)
+  const [switchState, changeSwitch] = useState(false)
 
   // Switch Styling
   const selectStyle = {
