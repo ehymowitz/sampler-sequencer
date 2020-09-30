@@ -12,7 +12,7 @@ const SequencerNode = ({beat, note, octave, synth, spot, switchState, drum}) => 
       synth.value.triggerAttackRelease(`${note.value}${octave.value}`, "2n")
     }
     else if (active && spot === beat && !switchState) {
-      const sound = sessionStorage.getItem(drum)
+      const sound = localStorage.getItem(drum)
       const audio = new Audio(sound)
       audio.play()
     }

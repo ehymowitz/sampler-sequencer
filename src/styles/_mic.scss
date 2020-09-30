@@ -1,0 +1,45 @@
+.mic-container {
+  text-align: center;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-gap: 20px;
+  .file-drop {
+    div {
+      padding: 20px;
+      background-color: #c6c6c6;
+      border-radius: 5px;
+    }
+  }
+  .list-container {
+    h2 {
+      margin: 10px;
+    }
+    h2 + div {
+      text-align: left;
+    }
+  }
+  .files-list {
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    background: #c6c6c6;
+    border-radius: 5px;
+    margin-top: 10px;
+    max-height: 160px;
+    overflow: auto;
+    li {
+      display: flex;
+      align-items: center;
+      margin: 0 20px;
+      p {
+        margin: 10px;
+        margin-right: 20px;
+        cursor: pointer;
+      }
+      svg {
+        cursor: pointer;
+      }
+    }
+  }
+}
