@@ -16,20 +16,25 @@ const tip =
       any ideas feel free to reach me at ehymowitz@gmail.com
     </p>
     <p>
-      There are two pages on here so far - the main sequencer page and the live
-      trigger page which I modeled after an MPC3000. You can open more than one
-      page of this webapp so I HIGHLY recommend making a loop in one page then opening
+      There are three pages on here so far - Sequencer, File Loader, and MPC.
+      You can navigate using the bottom menu with the play button, mic, and grid shaped buttons respectively.
+    </p>
+    <p>
+      You can open more than one page of this webapp so I HIGHLY recommend making a loop in one page then opening
       a new page to improvise sounds over the loop in another session.
     </p>
     <p>
+      File Loader: Upload your own files or select files which are hosted online so that they appear in other pages.
+      Click on a sound to preview it.
+    </p>
+    <p>
       Sequencer: You can change the BPM, mess with different sounds and the switch gives
-      access to some classic percussion sounds. Play controls are on the top by the
+      access to some synth sounds. Play controls are on the top by the
       bpm box.
     </p>
     <p>
-      MPC: Hold down a trigger to open the menu to change the sound - experiment
-      with synths or hit the switch to play with sounds from Citizen DJ (there
-        are alot)
+      MPC: Hold down a trigger to open the menu to change the sound - play with loaded files
+      or hit the switch to change into synth mode.
     </p>
     <p>
       Enjoy!
