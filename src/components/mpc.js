@@ -1,12 +1,24 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Collapse } from 'react-collapse'
 import Select from 'react-select'
-import { notes, octaves, synths, citizenDjSounds, firestore } from '../data/synth-data'
+import { notes, octaves, synths } from '../data/synth-data'
 import Switch from '@material-ui/core/Switch';
-import axios from 'axios'
 import * as Tone from 'tone'
 
 const MpcButtonPair = ({left, right}) => {
+
+  const options = Object.keys(localStorage).reverse()
+    .filter(key => {
+      return(
+        key.startsWith("hosted.") || key.startsWith("loaded.")
+      )
+    })
+    .map(key => {
+      return({
+        value: key,
+        label: key.split(/[/]/)[key.split(/[/]/).length-1].split("loaded.")
+      })
+    })
 
   // Tone States
   const [note1, setNote1] = useState(notes[0])
@@ -18,8 +30,8 @@ const MpcButtonPair = ({left, right}) => {
   const [synth1, setSynth1] = useState(synths[0])
   const [synth2, setSynth2] = useState(synths[0])
 
-  const [dj1, setDj1] = useState(citizenDjSounds[0])
-  const [dj2, setDj2] = useState(citizenDjSounds[0])
+  const [dj1, setDj1] = useState(options[0])
+  const [dj2, setDj2] = useState(options[0])
 
   // Menu State
   const [menuOpened1, setMenu1] = useState(false)
@@ -56,7 +68,7 @@ const MpcButtonPair = ({left, right}) => {
       synth.triggerAttackRelease(`${note}${octave}`, "2n")
     }
     if (!switchOn && dj) {
-      const sound = sessionStorage.getItem(dj)
+      const sound = localStorage.getItem(dj)
       const audio = new Audio(sound)
       audio.play()
     }
@@ -70,63 +82,19 @@ const MpcButtonPair = ({left, right}) => {
     }
   }
 
-  useEffect(()=> {
-    if(dj1) {
-      const fileName=`CitizenDJ/Dialect Samples/${dj1.value}`
-      const dataRef = firestore.ref(fileName)
-      dataRef.getDownloadURL().then(function(url) {
-        axios({
-          responseType: 'blob',
-          url: url,
-          method: 'get',
-        }).then((res) => {
-          const reader = new FileReader()
-          reader.addEventListener("loadend", () => {
-            sessionStorage.setItem(fileName, reader.result.toString())
-          })
-          reader.readAsDataURL(res.data)
-        })
-      }).catch(function(error){
-        console.log(error)
-      })
-    }
-  })
-
-  useEffect(()=> {
-    if(dj2) {
-      const fileName=`CitizenDJ/Dialect Samples/${dj2.value}`
-      const dataRef = firestore.ref(fileName)
-      dataRef.getDownloadURL().then(function(url) {
-        axios({
-          responseType: 'blob',
-          url: url,
-          method: 'get',
-        }).then((res) => {
-          const reader = new FileReader()
-          reader.addEventListener("loadend", () => {
-            sessionStorage.setItem(fileName, reader.result.toString())
-          })
-          reader.readAsDataURL(res.data)
-        })
-      }).catch(function(error){
-        console.log(error)
-      })
-    }
-  })
-
   return (
     <React.Fragment>
       <div className="button-container">
         <div
           className = {menuOpened1 ? 'mpc-button ripple menuOpened' : 'mpc-button ripple'}
           onMouseDown={()=> {
-            handleDown(synth1.value, note1.value, octave1.value, dj1 ? `CitizenDJ/Dialect Samples/${dj1.value}` : "", switchState1)
+            handleDown(synth1.value, note1.value, octave1.value, dj1 ? `${dj1.value}` : "", switchState1)
           }}
           onMouseUp={()=>{
             handleUp(setMenu1, menuOpened1, setMenu2)
           }}
           onTouchStart={()=> {
-            handleDown(synth1.value, note1.value, octave1.value, dj1 ? `CitizenDJ/Dialect Samples/${dj1.value}` : "", switchState1)
+            handleDown(synth1.value, note1.value, octave1.value, dj1 ? `${dj1.value}` : "", switchState1)
           }}
           onTouchEnd={()=>{
             handleUp(setMenu1, menuOpened1, setMenu2)
@@ -135,13 +103,13 @@ const MpcButtonPair = ({left, right}) => {
         <div
           className = {menuOpened2 ? 'mpc-button ripple menuOpened' : 'mpc-button ripple'}
           onMouseDown={()=> {
-            handleDown(synth2.value, note2.value, octave2.value, dj2 ? `CitizenDJ/Dialect Samples/${dj2.value}` : "", switchState2)
+            handleDown(synth2.value, note2.value, octave2.value, dj2 ? `${dj2.value}` : "", switchState2)
           }}
           onMouseUp={()=>{
             handleUp(setMenu2, menuOpened2, setMenu1)
           }}
           onTouchStart={()=> {
-            handleDown(synth2.value, note2.value, octave2.value, dj2 ? `CitizenDJ/Dialect Samples/${dj2.value}` : "", switchState2)
+            handleDown(synth2.value, note2.value, octave2.value, dj2 ? `${dj2.value}` : "", switchState2)
           }}
           onTouchEnd={()=>{
             handleUp(setMenu2, menuOpened2, setMenu1)
@@ -172,7 +140,7 @@ const MpcButtonPair = ({left, right}) => {
           </> :
           <Select
             styles={selectStyle1}
-            options={citizenDjSounds}
+            options={options}
             value={dj1}
             onChange={selectedOption => setDj1(selectedOption)}
           />
@@ -211,7 +179,7 @@ const MpcButtonPair = ({left, right}) => {
         </> :
         <Select
           styles={selectStyle2}
-          options={citizenDjSounds}
+          options={options}
           value={dj2}
           onChange={selectedOption => setDj2(selectedOption)}
         />
