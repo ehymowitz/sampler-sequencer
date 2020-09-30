@@ -37,8 +37,8 @@ const Menu = () => {
               <NavLink to = "/sequencer" style={ content === 1 ? {color: "white" }: {}} onClick={()=>changeContent(1)}> <BsFillPlayFill/> </NavLink>
             </li>
             <div className="vertical-divider"></div>
-            <li style = {{ fontSize: "20px" }} onClick={()=>changeContent(2)}>
-              <NavLink to = "/" style={ content === 2 ? {color: "white" }: {}}> <FiMic/> </NavLink>
+            <li style = {{ fontSize: "20px" }}>
+              <NavLink to = "/" style={ content === 2 ? {color: "white" }: {}} onClick={()=>changeContent(2)}> <FiMic/> </NavLink>
             </li>
             <div className="vertical-divider"></div>
             <li style = {{ fontSize: "30px" }} >

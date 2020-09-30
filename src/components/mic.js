@@ -92,41 +92,40 @@ const Mic = () => {
 
   return (
     <div className="mic-container">
-      <Dropzone onDrop= {acceptedFiles => handleUserFiles(acceptedFiles)}>
-        {({getRootProps, getInputProps}) => (
-          <div {...getRootProps()}>
+      <div className="file-drop">
+        <h3>User Uploaded Files - Only you can see these</h3>
+        <Dropzone onDrop={acceptedFiles => handleUserFiles(acceptedFiles)}>
+          {({getRootProps, getInputProps}) => (
+            <div {...getRootProps()}>
             <input {...getInputProps()} />
             <p>Drag in or click to add your audio files here! They'll be accessible on the other parts of the app</p>
-          </div>
-        )}
-      </Dropzone>
-      <h2>User Uploaded Files - Only you can see these</h2>
-      <ul>
-        {[...userFiles].map((item, key) => {
-          return(
-            <li
-              key={key}
-            >
-              <p onMouseDown={()=>{handleMenuPlay(item)}}>
-                {item.split("loaded.")[1]}
-              </p>
-              <BsFillTrashFill onMouseDown={()=>deleteItem(item, "loaded.", setUserFiles)} />
-            </li>
-          )
-        })}
-      </ul>
-      <h2>Online Hosted Files - Select the ones you want to use, they'll appear on the other pages</h2>
-      <h3>Drums Samples</h3>
+            </div>
+          )}
+        </Dropzone>
+        <ul className="files-list">
+          {[...userFiles].map((item, key) => {
+            return(
+              <li key={key} >
+                <p onMouseDown={()=>{handleMenuPlay(item)}}>
+                  {item.split("loaded.")[1]}
+                </p>
+                <BsFillTrashFill onMouseDown={()=>deleteItem(item, "loaded.", setUserFiles)} />
+              </li>
+            )
+          })}
+        </ul>
+      </div>
+      <div className="list-container">
+        <h3>Online Hosted Files - Select the ones you want to use, they'll appear on the other pages</h3>
+        <h2>Drums Samples</h2>
         <Select
           options={drumSounds}
           onChange={selectedOption=>handleAddHosted(selectedOption, "DrumSounds/")}
         />
-        <ul>
+        <ul className="files-list">
           {[...hostedFiles].filter(item => item.startsWith("hosted.Drum")).map((item, key) => {
             return(
-              <li
-                key={key}
-              >
+              <li key={key}>
                 <p onMouseDown={()=>{handleMenuPlay(item)}}>
                   {item.split("hosted.")[1].split("/")[1]}
                 </p>
@@ -135,17 +134,15 @@ const Mic = () => {
             )
           })}
         </ul>
-      <h3>Vocal Samples</h3>
+        <h2>Vocal Samples</h2>
         <Select
           options={citizenDjSounds}
           onChange={selectedOption=>handleAddHosted(selectedOption, "CitizenDJ/Dialect Samples/")}
         />
-        <ul>
+        <ul className="files-list">
           {[...hostedFiles].filter(item => item.startsWith("hosted.CitizenDJ")).map((item, key) => {
             return(
-              <li
-                key={key}
-              >
+              <li key={key}>
                 <p onMouseDown={()=>{handleMenuPlay(item)}}>
                   {item.split("hosted.")[1].split("/")[2]}
                 </p>
@@ -154,6 +151,7 @@ const Mic = () => {
             )
           })}
         </ul>
+      </div>
     </div>
   )
 }
